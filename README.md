@@ -48,11 +48,11 @@ ScannedSegment {
 
 Provides a cloned bitmap from the targeted screen or window.
 
-#### SetScanSegments(`ScanSegments[]` segments): `void`
+#### SetScanSegments(`ScanSegment[]` segments): `void`
 
 Set the default scan segments to be used when scanning.
 
-#### GetScanSegments(): `ScanSegments[]`
+#### GetScanSegments(): `ScanSegment[]`
 
 Gets the current value of the internal state *segments*.
 
