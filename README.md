@@ -1,0 +1,1 @@
+# bitmap-text-scanner
