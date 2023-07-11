@@ -12,7 +12,7 @@
 
 const float INCH_TO_METER_RATIO = 39.3701f;
 
-std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(std::string *windowName, bool includeFileHeader)
+std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char* windowName, bool includeFileHeader)
 {
   HWND hwndSrc = NULL;
   HBITMAP hbmpTarget = NULL; // Handle to target bmpBuffer
@@ -25,7 +25,7 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(std::string *windowName, boo
 
   try
   {
-    hwndSrc = FindWindowA(NULL, windowName->c_str());
+    hwndSrc = FindWindowA(NULL, windowName);
     hdcSrcWindow = GetDC(hwndSrc);        // Source window device-context handle
     hdcTarget = CreateCompatibleDC(NULL); // Get in-memory DC, not connected to a device
     BITMAP bmpObj;                        // Actual Bitmap object from GetObject()
@@ -159,9 +159,4 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(std::string *windowName, boo
   }
   // Success path, return bitmap, not errors
   return std::make_tuple(new Bitmap(bmpBuffer, size, width, height), nullptr);
-}
-
-void DisposeNativeBitmap(char *data, void *hint)
-{
-  free(data);
 }

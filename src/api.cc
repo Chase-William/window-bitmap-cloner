@@ -3,42 +3,17 @@
   See repository root directory for more information.
 */
 
-#pragma once
 #include "api.h"
 #include "img-get.h"
 
-std::tuple<Bitmap *, Error *> Scanner::PreviewBitmap()
+std::tuple<Bitmap *, Error *> PreviewBitmapInternal(const char *source)
 {
-  // Return error if source is undefined
-  if (!Scanner::source)
-  {
-    return std::make_tuple(nullptr, new Error(Errors::SourceUndefined));
-  }
-  return GetNativeWindowBitmap(Scanner::source, true);
+  return GetNativeWindowBitmap(source, false);
 }
 
-void Scanner::SetScanSegments(ScanSegment segments[])
+std::tuple<ScannedSegment *, Error *> ScanInternal(const char* source, ScanSegment segments[])
 {
-  // Clean up old alloc if not null
-  if (Scanner::segments)
-  {
-    delete Scanner::segments;
-  }
-  Scanner::segments = segments;
-}
-
-ScanSegment *Scanner::GetScanSegments()
-{
-  return Scanner::segments;
-}
-
-std::tuple<ScannedSegment *, Error *> Scanner::Scan(ScanSegment segments[] = NULL)
-{
-  // Return error if source is undefined
-  if (!Scanner::source) {
-    return std::make_tuple(nullptr, new Error(Errors::SourceUndefined));
-  }
-  auto result = GetNativeWindowBitmap(Scanner::source, false);
+  auto result = GetNativeWindowBitmap(source, false);
 
   // If an error exist, return with error
   Error *err = std::get<1>(result);
@@ -47,5 +22,10 @@ std::tuple<ScannedSegment *, Error *> Scanner::Scan(ScanSegment segments[] = NUL
   }
 
   // No errors, process bitmap
+  throw 0;
+}
 
+void DisposeNativeBitmap(char *data, void *hint)
+{
+  free(data);
 }

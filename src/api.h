@@ -7,25 +7,17 @@
 
 #include <iostream>
 #include <tuple>
-#include <types.h>
 #include <memory>
+#include "types.h"
 
-class Scanner
-{
-public:
-  // Screen or window name as bitmap source
-  std::string *source = NULL;
+/*
+  Clones a bitmap from the source or returns an error.
+*/
+std::tuple<Bitmap *, Error *> PreviewBitmapInternal(const char* source);
 
-  ScanSegment *segments = NULL;
+std::tuple<ScannedSegment *, Error *> ScanInternal(const char* source, ScanSegment segments[]);
 
-  /*
-    Clones a bitmap from the source or returns an error.
-  */
-  std::tuple<Bitmap *, Error *> PreviewBitmap();
-
-  void SetScanSegments(ScanSegment segments[]);
-
-  ScanSegment *GetScanSegments();
-
-  std::tuple<ScannedSegment *, Error *> Scan(ScanSegment segments[] = NULL);
-};
+/*
+  Finalizer callback for releasing unmanaged resources.
+*/
+void DisposeNativeBitmap(char *data, void *hint);
