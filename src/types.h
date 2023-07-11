@@ -1,13 +1,18 @@
+/*
+  Authored by Chase Roth 7/11/2023
+  See repository root directory for more information.
+*/
+
 #pragma once
 #include <tuple>
 #include <iostream>
 
-enum WinImgGetError : int {
-  Success = 0,
+enum Errors : int {
   FailedToFindWindow = 1,
   FailedToGetClientRect = 2,
   BitBlockTransferFailed = 3,
-  TesseractInitializationFailure = 4
+  TesseractInitializationFailure = 4,
+  SourceUndefined = 5
 };
 
 class ScanSegment {
@@ -41,8 +46,8 @@ class ScannedSegment : ScanSegment {
 
 class Error {
 public:
-  int *ErrorCode;
-  Error(int *code) : 
+  int ErrorCode;
+  Error(int code) : 
     ErrorCode(code) 
   { }
 };

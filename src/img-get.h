@@ -14,7 +14,7 @@
   Param - size, size of the bitmap buffer being returned
   Return, pointer to the head of the bitmap buffer
 */
-std::tuple<Bitmap, Error> GetNativeWindowBitmap(std::string windowName, bool includeFileHeader);
+std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(std::string *windowName, bool includeFileHeader);
 
 /*
   Finalizer callback for releasing unmanaged resources.
