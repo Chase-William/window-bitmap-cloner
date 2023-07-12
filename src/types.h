@@ -57,10 +57,9 @@ class Bitmap {
 public:
   char *BitmapBuffer;
   unsigned long Size;
-  long Width;
-  long Height;
+  int Width, Height;
 
-  Bitmap(char *bitmapBuffer, unsigned long size, long width, long height) : 
+  Bitmap(char *bitmapBuffer, unsigned long size, int width, int height) : 
     BitmapBuffer(bitmapBuffer),
     Size(size),
     Width(width),

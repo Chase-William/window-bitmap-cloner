@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/node_modules/nan"
+                "C:/Users/Chase Roth/AppData/Local/node-gyp/Cache/18.16.1/include/node",
+                
             ],
             "defines": [
                 "_DEBUG",

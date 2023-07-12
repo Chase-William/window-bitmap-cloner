@@ -33,7 +33,7 @@ export namespace BitmapTextScanner {
   //   return myModule.GetWindowBitmap(windowName, includeFileHeader);
   // }  
 
-  export function PreviewBitmap(): [Bitmap, RequestError] {
+  export function PreviewBitmap(): { bitmap: Bitmap, err: RequestError } {
     return myModule.PreviewBitmap()
   }
 
@@ -42,13 +42,12 @@ export namespace BitmapTextScanner {
   // }
 
   export class RequestError {
-    ErrorCode: number
+    code: number
   }
 
   export class Bitmap {
-    BitmapBuffer: ArrayBuffer
-    Width: number
-    Height: number
-    Size: number
+    bitmapBuffer: ArrayBuffer
+    width: number
+    height: number
   }
 }

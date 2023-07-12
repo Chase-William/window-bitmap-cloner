@@ -16,41 +16,55 @@ NAN_METHOD(PreviewBitmap)
   // Call our custom API for polling a bitmap from a target window
   std::tuple<Bitmap *, Error *> r = PreviewBitmapInternal(namePtr);
 
-  
+  // Retrieve Error
+  Error *err = std::get<1>(r);
+  // If an error exist, create the error return obj and return it
+  if (err)
+  {
 
-// #if _DEBUG
-//   std::cout << "ErrorCode: " << r.ErrorCode << std::endl;
-//   std::cout << "BitmapBuffer Address: " << &(r.BitmapBuffer) << std::endl;
-//   std::cout << "Size: " << r.Size << std::endl;
-//   std::cout << "Width: " << r.Width << std::endl;
-//   std::cout << "Height: " << r.Height << std::endl;
-// #endif
+#if _DEBUG
+    std::cout << "errCode: " << err->ErrorCode << std::endl;
+#endif
 
-  // int *err = r.ErrorCode;
+    v8::Local<v8::Object> rootObj = Nan::New<v8::Object>();
+    v8::Local<v8::Object> errObj = Nan::New<v8::Object>();
+    v8::Local<v8::String> errName = Nan::New("code").ToLocalChecked();
+    v8::Local<v8::Number> errValue = Nan::New(err->ErrorCode);
+    Nan::Set(errObj, errName, errValue);
+    Nan::Set(rootObj, Nan::New("err").ToLocalChecked(), errObj);
+    info.GetReturnValue().Set(rootObj);
+    delete err;
+    return;
+  }
 
-  // // Create generic JS object to append to
-  // v8::Local<v8::Object> jsObj = Nan::New<v8::Object>();
+  // Get bitmap
+  Bitmap *bitmap = std::get<0>(r);
 
-  // // Create propNames and values
-  // v8::Local<v8::String> errorName = Nan::New("ErrorCode").ToLocalChecked();
-  // v8::Local<v8::Number> errorValue = Nan::New(err == NULL ? 0 : *err);
-  // delete err; // cleanup bc we are passing by value to v8 so this can be deleted
+#if _DEBUG
+  std::cout << "BitmapBuffer Address: " << &(bitmap->BitmapBuffer) << std::endl;
+  std::cout << "Size: " << bitmap->Size << std::endl;
+  std::cout << "Width: " << bitmap->Width << std::endl;
+  std::cout << "Height: " << bitmap->Height << std::endl;
+#endif
 
-  // v8::Local<v8::String> bufferName = Nan::New("BitmapBuffer").ToLocalChecked();
-  // v8::Local<v8::Object> bufferValue = Nan::NewBuffer(r.BitmapBuffer, (uint32_t)r.Size, DisposeNativeBitmap, NULL).ToLocalChecked();
-  // // Creat width js prop
-  // v8::Local<v8::String> widthName = Nan::New("Width").ToLocalChecked();
-  // v8::Local<v8::Number> widthValue = Nan::New(r.Width);
-  // // Create height js prop
-  // v8::Local<v8::String> heightName = Nan::New("Height").ToLocalChecked();
-  // v8::Local<v8::Number> heightValue = Nan::New(r.Height);
+  // Create Root Res Obj
+  v8::Local<v8::Object> rootObj = Nan::New<v8::Object>();
 
-  // // Apply props to js obj
-  // Nan::Set(jsObj, errorName, errorValue);
-  // Nan::Set(jsObj, bufferName, bufferValue);
-  // Nan::Set(jsObj, widthName, widthValue);
-  // Nan::Set(jsObj, heightName, heightValue);
+  // Create Props
+  v8::Local<v8::String> bufferName = Nan::New("bitmapBuffer").ToLocalChecked();
+  v8::Local<v8::Object> bufferValue = Nan::NewBuffer(bitmap->BitmapBuffer, (uint32_t)bitmap->Size, DisposeNativeBitmap, NULL)
+                                          .ToLocalChecked();
+  v8::Local<v8::String> widthName = Nan::New("width").ToLocalChecked();
+  v8::Local<v8::Number> widthValue = Nan::New(bitmap->Width);
+  v8::Local<v8::String> heightName = Nan::New("height").ToLocalChecked();
+  v8::Local<v8::Number> heightValue = Nan::New(bitmap->Height);
 
-  // // Set obj as return
-  // info.GetReturnValue().Set(jsObj);
+  // Bind
+  Nan::Set(rootObj, bufferName, bufferValue);
+  Nan::Set(rootObj, widthName, widthValue);
+  Nan::Set(rootObj, heightName, heightValue);
+
+  info.GetReturnValue().Set(rootObj);
+
+  delete bitmap;
 }

@@ -20,7 +20,7 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char* windowName, bool
   HDC hdcTarget = NULL;
   char *bmpBuffer = NULL;
   int size = 0; // Initialize size otherwise unitialized memory is use and has undefined behavior
-  long width, height;
+  int width = 0, height = 0;
   int err = 0;
 
   try
@@ -67,7 +67,7 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char* windowName, bool
     // Get the BITMAP from the HBITMAP
     GetObject(hbmpTarget, sizeof(BITMAP), &bmpObj);
 
-    long dpiX, dpiY;
+    long dpiX = 0, dpiY = 0;
     // Get DPI of screen vertical / horizontal
     HDC screen = GetDC(NULL);
     dpiX = (GetDeviceCaps(screen, LOGPIXELSX));
@@ -141,6 +141,7 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char* windowName, bool
   }
   catch (Errors errCode)
   {
+    std::cout << "Error thrown when cloning bitmap; error code: " << errCode << std::endl;
   }
 
   if (hbmpTarget)

@@ -8,7 +8,7 @@
 
 std::tuple<Bitmap *, Error *> PreviewBitmapInternal(const char *source)
 {
-  return GetNativeWindowBitmap(source, false);
+  return GetNativeWindowBitmap(source, true);
 }
 
 std::tuple<ScannedSegment *, Error *> ScanInternal(const char* source, ScanSegment segments[])
