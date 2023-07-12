@@ -1,10 +1,9 @@
 const { BitmapTextScanner } = require('./dist/index');
 const fs = require('fs');
 
-console.log("Calling native node addon api for a bitmap from the specified window...");
 const res = BitmapTextScanner.PreviewBitmap("ARK: Survival Evolved");
 
-console.log(res)
+// console.log(res)
 
 if (res.err) {
   switch (res.err.code) {
@@ -26,8 +25,8 @@ if (res.err) {
   }
 }
 else {
-  const view = new Uint8Array(res.bitmap);
-  console.log(view);
+  const view = new Uint8Array(res.bitmap.bitmapBuffer);
+   // console.log(view);
 
   fs.writeFileSync('res.bmp', view, (err) => {
     if (err) return console.log(err);

@@ -3,15 +3,16 @@
 #include <iostream>
 #include "entry.h"  // Native node addon library utility declarations
 #include "../api.h" // Declares our libraries utilities
+#include "plog/Log.h"
 
 NAN_METHOD(PreviewBitmap)
 {
   Nan::Utf8String windowName(Nan::To<v8::String>(info[0]).ToLocalChecked());
-  v8::Local<v8::Boolean> v8IncludeFileHeader = Nan::To<v8::Boolean>(info[1]).ToLocalChecked();
+  // v8::Local<v8::Boolean> v8IncludeFileHeader = Nan::To<v8::Boolean>(info[1]).ToLocalChecked();
 
   // Get underlying char* from Nan string
   const char *namePtr = windowName.operator*();
-  bool includeFileHeader = v8IncludeFileHeader.operator*()->Value();
+  // bool includeFileHeader = v8IncludeFileHeader.operator*()->Value();
 
   // Call our custom API for polling a bitmap from a target window
   std::tuple<Bitmap *, Error *> r = PreviewBitmapInternal(namePtr);
@@ -32,7 +33,12 @@ NAN_METHOD(PreviewBitmap)
     v8::Local<v8::Number> errValue = Nan::New(err->ErrorCode);
     Nan::Set(errObj, errName, errValue);
     Nan::Set(rootObj, Nan::New("err").ToLocalChecked(), errObj);
+    
+    // Set res obj
     info.GetReturnValue().Set(rootObj);
+    // Log error
+    PLOGD << "PreviewBitmap, Error Code: " << err->ErrorCode;
+
     delete err;
     return;
   }
@@ -49,6 +55,7 @@ NAN_METHOD(PreviewBitmap)
 
   // Create Root Res Obj
   v8::Local<v8::Object> rootObj = Nan::New<v8::Object>();
+  v8::Local<v8::Object> bitmapObj = Nan::New<v8::Object>();
 
   // Create Props
   v8::Local<v8::String> bufferName = Nan::New("bitmapBuffer").ToLocalChecked();
@@ -60,11 +67,15 @@ NAN_METHOD(PreviewBitmap)
   v8::Local<v8::Number> heightValue = Nan::New(bitmap->Height);
 
   // Bind
-  Nan::Set(rootObj, bufferName, bufferValue);
-  Nan::Set(rootObj, widthName, widthValue);
-  Nan::Set(rootObj, heightName, heightValue);
+  Nan::Set(bitmapObj, bufferName, bufferValue);
+  Nan::Set(bitmapObj, widthName, widthValue);
+  Nan::Set(bitmapObj, heightName, heightValue);
+  Nan::Set(rootObj, Nan::New("bitmap").ToLocalChecked(), bitmapObj);
 
   info.GetReturnValue().Set(rootObj);
+
+  // Log info
+  PLOGI << "PreviewBitmap, BufferSize: " << bitmap->Size << " Width: " << bitmap->Width << " Height: " << bitmap->Height;
 
   delete bitmap;
 }

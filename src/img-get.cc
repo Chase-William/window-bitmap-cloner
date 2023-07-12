@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "img-get.h"
 #include <cstring>
+#include "plog/Log.h"
 
 const float INCH_TO_METER_RATIO = 39.3701f;
 
@@ -25,6 +26,7 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char* windowName, bool
 
   try
   {
+    PLOGD << "GetNativeWindowBitmap, WindowName: " << windowName << " IncludeFileHeader " << includeFileHeader;
     hwndSrc = FindWindowA(NULL, windowName);
     hdcSrcWindow = GetDC(hwndSrc);        // Source window device-context handle
     hdcTarget = CreateCompatibleDC(NULL); // Get in-memory DC, not connected to a device
@@ -148,6 +150,7 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char* windowName, bool
   {
     if (!DeleteObject(hbmpTarget))
     { // Cleanup HBITMAP
+      PLOGE << "Failed to delete object 'hbmpTarget' @" << &hbmpTarget;
       std::cout << "Failed to delete: hbmpTarget" << std::endl;
     }
   }

@@ -2,6 +2,10 @@
 #include "entry.h" // Contains our functions
 #include <iostream>
 
+// Logger header files
+#include <plog/Log.h>
+#include "plog/Initializers/RollingFileInitializer.h"
+
 void Initialize(v8::Local<v8::Object> exports)
 {
   Nan::Set(exports, Nan::New<v8::String>("PreviewBitmap").ToLocalChecked(),
@@ -18,4 +22,6 @@ NODE_MODULE_INITIALIZER(v8::Local<v8::Object> exports,
   /* Perform addon initialization steps here. */
 
   Initialize(exports);
+
+  plog::init(plog::debug, "log.txt");
 }

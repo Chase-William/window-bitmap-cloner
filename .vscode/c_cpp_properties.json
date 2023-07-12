@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/Users/Chase Roth/AppData/Local/node-gyp/Cache/18.16.1/include/node",
-                
+                "D:/Dev/vcpkg",
+                "D:/Dev/vcpkg/packages/plog_x86-windows/include"
             ],
             "defines": [
                 "_DEBUG",

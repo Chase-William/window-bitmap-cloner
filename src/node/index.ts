@@ -33,8 +33,8 @@ export namespace BitmapTextScanner {
   //   return myModule.GetWindowBitmap(windowName, includeFileHeader);
   // }  
 
-  export function PreviewBitmap(): { bitmap: Bitmap, err: RequestError } {
-    return myModule.PreviewBitmap()
+  export function PreviewBitmap(source: string): { bitmap: Bitmap, err: RequestError } {
+    return myModule.PreviewBitmap(source)
   }
 
   // export function TestMethod(): string {
