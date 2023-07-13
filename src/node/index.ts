@@ -23,7 +23,7 @@ export namespace BitmapTextScanner {
   }
 
 
-  export function PreviewBitmap(source: string): ResTuple {
+  export function PreviewBitmap(source: string): { bitmap: Bitmap, err: RequestError } {
     return myModule.PreviewBitmap(source)
   }
 

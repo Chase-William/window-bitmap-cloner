@@ -4,7 +4,7 @@ const fs = require('fs');
 /*
   Provide the window title below:
 */
-const windowTitle = "Window Spy for AHKv2"
+const windowTitle = "window name here"
 const res = BitmapTextScanner.PreviewBitmap(windowTitle);
 
 // console.log(res)
