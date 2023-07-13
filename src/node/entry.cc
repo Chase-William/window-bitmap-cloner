@@ -22,11 +22,6 @@ NAN_METHOD(PreviewBitmap)
   // If an error exist, create the error return obj and return it
   if (err)
   {
-
-#if _DEBUG
-    std::cout << "errCode: " << err->ErrorCode << std::endl;
-#endif
-
     v8::Local<v8::Object> rootObj = Nan::New<v8::Object>();
     v8::Local<v8::Object> errObj = Nan::New<v8::Object>();
     v8::Local<v8::String> errName = Nan::New("code").ToLocalChecked();
@@ -37,21 +32,14 @@ NAN_METHOD(PreviewBitmap)
     // Set res obj
     info.GetReturnValue().Set(rootObj);
     // Log error
-    PLOGD << "PreviewBitmap, Error Code: " << err->ErrorCode;
+    PLOGE << "PreviewBitmap, Error Code: " << err->ErrorCode;
 
     delete err;
     return;
   }
-
+  
   // Get bitmap
   Bitmap *bitmap = std::get<0>(r);
-
-#if _DEBUG
-  std::cout << "BitmapBuffer Address: " << &(bitmap->BitmapBuffer) << std::endl;
-  std::cout << "Size: " << bitmap->Size << std::endl;
-  std::cout << "Width: " << bitmap->Width << std::endl;
-  std::cout << "Height: " << bitmap->Height << std::endl;
-#endif
 
   // Create Root Res Obj
   v8::Local<v8::Object> rootObj = Nan::New<v8::Object>();

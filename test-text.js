@@ -1,3 +1,3 @@
 const { BitmapTextScanner } = require('./dist/index');
 
-BitmapTextScanner.GetText();
+BitmapTextScanner.GetText("ARK: Survival Evolved");

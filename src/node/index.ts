@@ -9,11 +9,9 @@
   -- First Line for Node
   -- Second for Electron
 */
+
 const myModule = require("../build/Release/binding");
 const tesseract = require("tesseract.js")
-// import Tesseract from 'tesseract.js';
-
-// const myModule = require("./binding.node");
 
 export namespace BitmapTextScanner {
 
@@ -32,27 +30,31 @@ export namespace BitmapTextScanner {
     height: number;
   }
 
-  // export function GetWindowBitmap(windowName: string, includeFileHeader: boolean): Bitmap {
-  //   return myModule.GetWindowBitmap(windowName, includeFileHeader);
-  // }  
+  export type ResTuple = {
+    bitmap: Bitmap
+    err: RequestError
+  }
 
-  export function PreviewBitmap(source: string): { bitmap: Bitmap, err: RequestError } {
+  export function PreviewBitmap(source: string): ResTuple {
     return myModule.PreviewBitmap(source)
   }
 
-  export function GetText() {
+  export function GetText(source: string) {
+    const { bitmap, err }: ResTuple = myModule.PreviewBitmap(source)
+    
+    if (err) {
+      console.log("An error was received, code: " + err.code)
+      return
+    }
+
     tesseract.recognize(
-      'https://tesseract.projectnaptha.com/img/eng_bw.png',
+      bitmap.bitmapBuffer,
       'eng',
       { logger: m => console.log(m) }
     ).then(({ data: { text } }) => {
       console.log(text);
     })
   }
-
-  // export function TestMethod(): string {
-  //   return myModule.TestMethod()
-  // }
 
   export class RequestError {
     code: number
