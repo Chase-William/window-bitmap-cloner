@@ -16,6 +16,13 @@ Library
 ### Languages:
 - C++
 
+### Dependencies
+
+- _plog_, `vcpkg install plog`
+- _tesseract_, `vcpkg install tesseract`
+
+> Note: After installation, ensure to add include path to `./vscode/c_cpp_properties.json`.
+
 ### `ScanSegment` Type:
 
 This type represents a segment of a bitmap to be scanned.
