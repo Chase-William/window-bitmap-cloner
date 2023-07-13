@@ -29,18 +29,21 @@ const res = BitmapTextScanner.PreviewBitmap(your window title);
 ### Example Uses
 
 #### Notpad
-![ex1](https://github.com/Chase-William/window-bitmap-cloner/assets/46757278/3e9977d0-51cc-4264-8899-00d6c35aa51b)
+
+![ex1](https://github.com/Chase-William/window-bitmap-cloner/assets/46757278/b3ec63d9-4a0f-4bf1-b000-3dd154572b73)
 
 #### A Video Game in Unreal Engine 4
-![ex2](https://github.com/Chase-William/window-bitmap-cloner/assets/46757278/e3d04617-95ea-42ca-aa56-14897fcafa7b)
+
+![ex2](https://github.com/Chase-William/window-bitmap-cloner/assets/46757278/ea80c9f3-df6e-4091-bb05-c044afc76852)
 
 #### FireFox
-![ex3](https://github.com/Chase-William/window-bitmap-cloner/assets/46757278/9202a256-8a32-486f-b01e-341dfd1fb89f)
+
+![ex3](https://github.com/Chase-William/window-bitmap-cloner/assets/46757278/dc57e719-9b27-4cf5-ac43-0e8e0efb9a54)
 
 #### Auto Hotkey Spy Program
 
-I recommend getting this little tool if you need to plug information easily about various windows. Download [here](https://www.autohotkey.com/).
+![ex4](https://github.com/Chase-William/window-bitmap-cloner/assets/46757278/aabbd764-5cc9-4760-9037-91975471d505)
 
-![ex4](https://github.com/Chase-William/window-bitmap-cloner/assets/46757278/3f6ef007-36bc-43b2-af44-923d3ac0fe97)
+I recommend getting this little tool if you need to plug information easily about various windows. Download [here](https://www.autohotkey.com/).
 
 > Note: Some windows like Google Chrome do not work and present a completely black bitmap.
