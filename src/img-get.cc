@@ -13,7 +13,7 @@
 
 const float INCH_TO_METER_RATIO = 39.3701f;
 
-std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char* windowName, bool includeFileHeader)
+std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char *windowName, bool includeFileHeader)
 {
   HWND hwndSrc = NULL;
   HBITMAP hbmpTarget = NULL; // Handle to target bmpBuffer
@@ -143,9 +143,10 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char* windowName, bool
   }
   catch (Errors errCode)
   {
-    // Signify an error has occured used after cleanup
     err = errCode;
-    std::cout << "Error thrown when cloning bitmap; error code: " << errCode << std::endl;
+    // Log error
+    PLOGE << "PreviewBitmap, Error Code: " << err;
+
   }
 
   if (hbmpTarget)

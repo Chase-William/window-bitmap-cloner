@@ -10,8 +10,6 @@ void Initialize(v8::Local<v8::Object> exports)
 {
   Nan::Set(exports, Nan::New<v8::String>("PreviewBitmap").ToLocalChecked(),
            Nan::GetFunction(Nan::New<v8::FunctionTemplate>(PreviewBitmap)).ToLocalChecked());
-  // Nan::Set(exports, Nan::New<v8::String>("TryGetTribeLogText").ToLocalChecked(),
-  //          Nan::GetFunction(Nan::New<v8::FunctionTemplate>(TryGetTribeLogText)).ToLocalChecked());
 }
 
 extern "C" NODE_MODULE_EXPORT void
@@ -23,5 +21,6 @@ NODE_MODULE_INITIALIZER(v8::Local<v8::Object> exports,
 
   Initialize(exports);
 
+  // Init Logging Library
   plog::init(plog::debug, "log.txt");
 }

@@ -15,36 +15,6 @@ enum Errors : int {
   SourceUndefined = 5
 };
 
-class Sector {
-  public:
-  
-  // Unique identifier for this scan segment
-  std::string Key;
-  // Rectangle used for OCR
-  int Left, Top, Width, Height;
-  // Recognized text from OCR
-  std::string Text;
-
-  Sector(std::string key, int left, int top, int width, int height) :
-    Key(key),
-    Left(left),
-    Top(top),
-    Width(width),
-    Height(height)
-  { }
-};
-
-// class ScannedSegment : ScanSegment {
-//   public:
-  
-//   // Recognized text from OCR
-//   std::string Text;
-
-//   ScannedSegment(std::string key, int left, int top, int width, int bottom, std::string text) :
-//     ScanSegment(key, left, top, width, left),
-//     Text(text)
-//   { }
-// };
 
 class Error {
 public:
