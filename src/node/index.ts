@@ -10,7 +10,6 @@
   -- Second for Electron
 */
 const myModule = require("../build/Release/binding");
-// const myModule = require("./binding.node");
 
 export namespace BitmapTextScanner {
 
@@ -21,25 +20,10 @@ export namespace BitmapTextScanner {
     TesseractInitializationFailure = 4,
     SourceUndefined = 5
   }
-  
-  export interface Area {
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  }
-
-  // export function GetWindowBitmap(windowName: string, includeFileHeader: boolean): Bitmap {
-  //   return myModule.GetWindowBitmap(windowName, includeFileHeader);
-  // }  
 
   export function PreviewBitmap(source: string): { bitmap: Bitmap, err: RequestError } {
     return myModule.PreviewBitmap(source)
   }
-
-  // export function TestMethod(): string {
-  //   return myModule.TestMethod()
-  // }
 
   export class RequestError {
     code: number

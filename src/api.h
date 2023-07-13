@@ -15,8 +15,6 @@
 */
 std::tuple<Bitmap *, Error *> PreviewBitmapInternal(const char* source);
 
-std::tuple<ScannedSegment *, Error *> ScanInternal(const char* source, ScanSegment segments[]);
-
 /*
   Finalizer callback for releasing unmanaged resources.
 */

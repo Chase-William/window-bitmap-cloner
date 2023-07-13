@@ -8,11 +8,9 @@
 NAN_METHOD(PreviewBitmap)
 {
   Nan::Utf8String windowName(Nan::To<v8::String>(info[0]).ToLocalChecked());
-  // v8::Local<v8::Boolean> v8IncludeFileHeader = Nan::To<v8::Boolean>(info[1]).ToLocalChecked();
 
   // Get underlying char* from Nan string
   const char *namePtr = windowName.operator*();
-  // bool includeFileHeader = v8IncludeFileHeader.operator*()->Value();
 
   // Call our custom API for polling a bitmap from a target window
   std::tuple<Bitmap *, Error *> r = PreviewBitmapInternal(namePtr);
@@ -22,11 +20,6 @@ NAN_METHOD(PreviewBitmap)
   // If an error exist, create the error return obj and return it
   if (err)
   {
-
-#if _DEBUG
-    std::cout << "errCode: " << err->ErrorCode << std::endl;
-#endif
-
     v8::Local<v8::Object> rootObj = Nan::New<v8::Object>();
     v8::Local<v8::Object> errObj = Nan::New<v8::Object>();
     v8::Local<v8::String> errName = Nan::New("code").ToLocalChecked();
@@ -35,9 +28,7 @@ NAN_METHOD(PreviewBitmap)
     Nan::Set(rootObj, Nan::New("err").ToLocalChecked(), errObj);
     
     // Set res obj
-    info.GetReturnValue().Set(rootObj);
-    // Log error
-    PLOGD << "PreviewBitmap, Error Code: " << err->ErrorCode;
+    info.GetReturnValue().Set(rootObj);    
 
     delete err;
     return;
@@ -45,13 +36,6 @@ NAN_METHOD(PreviewBitmap)
 
   // Get bitmap
   Bitmap *bitmap = std::get<0>(r);
-
-#if _DEBUG
-  std::cout << "BitmapBuffer Address: " << &(bitmap->BitmapBuffer) << std::endl;
-  std::cout << "Size: " << bitmap->Size << std::endl;
-  std::cout << "Width: " << bitmap->Width << std::endl;
-  std::cout << "Height: " << bitmap->Height << std::endl;
-#endif
 
   // Create Root Res Obj
   v8::Local<v8::Object> rootObj = Nan::New<v8::Object>();
