@@ -146,6 +146,7 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char *windowName, bool
     err = errCode;
     // Log error
     PLOGE << "PreviewBitmap, Error Code: " << err;
+
   }
 
   if (hbmpTarget)
@@ -153,14 +154,13 @@ std::tuple<Bitmap *, Error *> GetNativeWindowBitmap(const char *windowName, bool
     if (!DeleteObject(hbmpTarget))
     { // Cleanup HBITMAP
       PLOGE << "Failed to delete object 'hbmpTarget' @" << &hbmpTarget;
-      std::cout << "Failed to delete: hbmpTarget" << std::endl;
     }
   }
   ReleaseDC(NULL, hdcTarget);       // Cleanup hdc target
   ReleaseDC(hwndSrc, hdcSrcWindow); // Cleanup hdc from the source window handle
 
   if (err)
-  { // If an error exist, return error without bitmap
+  { // If an error exist, return error without the bitmap
     return std::make_tuple(nullptr, new Error(err));
   }
   // Success path, return bitmap, not errors

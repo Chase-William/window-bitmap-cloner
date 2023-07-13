@@ -33,7 +33,7 @@ NAN_METHOD(PreviewBitmap)
     delete err;
     return;
   }
-
+  
   // Get bitmap
   Bitmap *bitmap = std::get<0>(r);
 

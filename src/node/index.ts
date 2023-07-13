@@ -9,6 +9,7 @@
   -- First Line for Node
   -- Second for Electron
 */
+
 const myModule = require("../build/Release/binding");
 
 export namespace BitmapTextScanner {
@@ -21,7 +22,8 @@ export namespace BitmapTextScanner {
     SourceUndefined = 5
   }
 
-  export function PreviewBitmap(source: string): { bitmap: Bitmap, err: RequestError } {
+
+  export function PreviewBitmap(source: string): ResTuple {
     return myModule.PreviewBitmap(source)
   }
 
