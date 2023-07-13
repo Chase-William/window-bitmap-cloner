@@ -1,70 +1,16 @@
-### Objective: 
-Perform OCR to withdraw text from segment(s) of a bitmap.
-### Project Style: 
-Library
+This is an example application using `win32` and `Node.js` to clone bitmaps from native windows. 
 
-### Key Operations:
-- Be able to clone bitmaps from win32 Windows and Screens.
-- Allow calling applications to preview bitmap.
-- Ability for calling applications to provide bounding boxes of a bitmap for scanning.
-- Output recognized text associated with the bounding box of the bitmap.
-
-### Technologies:
-- Tesseract OCR
-- Win32 API
-
-### Languages:
-- C++
-
-### Dependencies
-
-- _plog_, `vcpkg install plog`
-- _tesseract_, `vcpkg install tesseract`
-
-> Note: After installation, ensure to add include path to `./vscode/c_cpp_properties.json`.
-
-### `ScanSegment` Type:
-
-This type represents a segment of a bitmap to be scanned.
+### How it Works
 
 ```ts
-// Used when providing segments to scan
-ScanSegment {
-  key: string, // Unique identifier for bounding area, if not provided, use sequence index
-  rect: Rectangle, // Bounding box for OCR scanning
-}
-
-// Used when receiving scan results
-ScannedSegment {
-  key: string,
-  rect: Rectangle,
-  text: string // Identified text
-}
+// Import the library index file
+const { BitmapTextScanner } = require('./dist/index');
+// Call the PreviewBitmap function and provide the window title
+const res = BitmapTextScanner.PreviewBitmap(your window title);
 ```
 
-### Internal State:
-
-| Name | Data TYpe | Desciption | Why | 
-| --- | --- | --- | --- |
-| source | `string` | Bitmap cloning source *(i.e., a screen or window)*. | Reduce redudent method parameters by allowing the source to be set once as state. |
-| segments | `ScanSegment`[] | Segments to be scanned upon request. | Reduce redudent method parameters by allowing scan segments to be set as default state. |
-
-### API Methods:
-
-#### PreviewBitmap(): `Bitmap` or similar type
-
-Provides a cloned bitmap from the targeted screen or window.
-
-#### SetScanSegments(`ScanSegment[]` segments): `void`
-
-Set the default scan segments to be used when scanning.
-
-#### GetScanSegments(): `ScanSegment[]`
-
-Gets the current value of the internal state *segments*.
-
-#### Scan(`ScanSegment[]` segments = null): `ScannedSegment[]`
-
-Scans the current *source* and returns a collection of `ScannedSegment`s based on the *segments* parameter. If the *segments* argument is provided, it's value with be used instead of the internal *segments* state value. 
-
-> WARNING: Failure to set the state *segments* before invocation will result in an exception.
+1. The function `PreviewBitmap` is called and is provided the window title
+2. The call is delegated to the [`nan`](https://github.com/nodejs/nan) `PreviewBitmap` function written in C++ acting as the glue between the `Node.js` enviroment and the `img-get.cc` file.
+3. The underlying `const char*` *(a c styled string)* is retreived from the js object in the C++ space and passed to `PreviewBitmapInternal()` containing pure C++ and `win32`.
+4. A bunch of intermediate steps to clone the bitmap from the window take place; checkout *file here* to see for yourself.
+5. The result from `PreviewBitmapInternal()` is received and converted into javascript v8 engine objects and returned.
