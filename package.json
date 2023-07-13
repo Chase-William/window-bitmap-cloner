@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "bindings": "^1.5.0",
-    "nan": "^2.15.0"
+    "nan": "^2.15.0",
+    "tesseract.js": "^4.1.1"
   }
 }

@@ -10,6 +10,9 @@
   -- Second for Electron
 */
 const myModule = require("../build/Release/binding");
+const tesseract = require("tesseract.js")
+// import Tesseract from 'tesseract.js';
+
 // const myModule = require("./binding.node");
 
 export namespace BitmapTextScanner {
@@ -35,6 +38,16 @@ export namespace BitmapTextScanner {
 
   export function PreviewBitmap(source: string): { bitmap: Bitmap, err: RequestError } {
     return myModule.PreviewBitmap(source)
+  }
+
+  export function GetText() {
+    tesseract.recognize(
+      'https://tesseract.projectnaptha.com/img/eng_bw.png',
+      'eng',
+      { logger: m => console.log(m) }
+    ).then(({ data: { text } }) => {
+      console.log(text);
+    })
   }
 
   // export function TestMethod(): string {

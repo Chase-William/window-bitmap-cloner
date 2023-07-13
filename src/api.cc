@@ -11,20 +11,6 @@ std::tuple<Bitmap *, Error *> PreviewBitmapInternal(const char *source)
   return GetNativeWindowBitmap(source, true);
 }
 
-std::tuple<ScannedSegment *, Error *> ScanInternal(const char* source, ScanSegment segments[])
-{
-  auto result = GetNativeWindowBitmap(source, false);
-
-  // If an error exist, return with error
-  Error *err = std::get<1>(result);
-  if (err) {
-    return std::make_tuple(nullptr, err);
-  }
-
-  // No errors, process bitmap
-  throw 0;
-}
-
 void DisposeNativeBitmap(char *data, void *hint)
 {
   free(data);
